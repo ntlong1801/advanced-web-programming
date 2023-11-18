@@ -9,10 +9,11 @@ const checkSignUp = yup.object().shape({
     .string()
     .required('Required')
     .password('Password invalid'),
+  email: yup.string().email('Email is invalid'),
 });
 
 export const checkChangeProfile = yup.object().shape({
-  email: yup.email
+  email: yup.string().email('Email is invalid'),
 });
 
 export default checkSignUp;

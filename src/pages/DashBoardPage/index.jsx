@@ -1,5 +1,9 @@
+import Header from 'layout/header';
+
 export default function DashBoardPage() {
   return (
-    <div>This is DashBoard Page</div>
+    <Header>
+      <div>This is DashBoard Page</div>
+    </Header>
   );
 }

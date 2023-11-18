@@ -28,7 +28,6 @@ export default function C404() {
               </span>
               <span className="ml-4 flex flex-column">
                 <span className="text-900 lg:text-xl font-medium mb-1">Quay trở lại trang chủ</span>
-                <span className="text-600 lg:text-lg">Click here back to home</span>
               </span>
             </Link>
           </div>
