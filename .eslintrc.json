@@ -28,7 +28,8 @@
     "function-paren-newline": 0,
     "comma-dangle": 0,
     "object-curly-newline": 0,
-    "operator-linebreak": 0
+    "operator-linebreak": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
   },
   "settings": {
     "react": {
