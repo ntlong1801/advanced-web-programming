@@ -8,31 +8,48 @@ import { Link } from 'react-router-dom';
 import instance from 'config';
 import checkSignUp from 'pages/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Toast } from 'primereact/toast';
+import { useRef } from 'react';
 
 export default function SignUpPage() {
+  const toast = useRef(null);
+
   const {
     handleSubmit,
     control,
+    reset,
     formState: {
       errors
     }
   } = useForm({ mode: 'onChange', resolver: yupResolver(checkSignUp) });
 
-  const onSubmit = (data) => {
-    instance.post('/auth/signup', data).then((response) => {
-      console.log(response.data);
-    })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    console.log(data);
+  const showSuccess = (msg) => {
+    toast.current.show({ severity: 'success', summary: 'Success', detail: msg, life: 3000 });
+  };
+
+  const showError = (msg) => {
+    toast.current.show({ severity: 'error', summary: 'Fail', detail: msg, life: 3000 });
+  };
+
+  const onSubmit = async (data) => {
+    const response = await instance.post('/auth/signup', data);
+    if (response.data?.msg) {
+      showError(response.data?.msg);
+    } else {
+      reset({}, { keepValues: false });
+      showSuccess('Sign up successful');
+    }
   };
   return (
     <div className="flex align-items-center justify-content-center background">
+      <Toast ref={toast} />
       <div
         className="surface-card p-4 shadow-2 border-round w-full lg:w-6"
         style={{ maxWidth: '400px' }}
       >
+        <Link to="/">
+          <i className="pi pi-home" style={{ fontSize: '2rem' }} />
+        </Link>
         <h1 className="text-center text-primary">Sign Up</h1>
         <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="p-fluid justify-content-center">
           <TextInput
@@ -60,7 +77,6 @@ export default function SignUpPage() {
             control={control}
             errors={errors}
             label="Full Name"
-            isRequired
           />
           <TextInput
             type="text"
@@ -68,10 +84,10 @@ export default function SignUpPage() {
             control={control}
             errors={errors}
             label="Email"
-            isRequired
+            errorMessage={errors.email?.message || ''}
           />
           <div className="text-center mt-4">
-            <Button label="Sign In" type="submit" style={{ minWidth: '100px', width: '160px' }} />
+            <Button label="Sign up" type="submit" style={{ minWidth: '100px', width: '160px' }} />
           </div>
         </form>
 

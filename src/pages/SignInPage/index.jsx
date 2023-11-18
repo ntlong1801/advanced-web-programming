@@ -20,19 +20,15 @@ export default function SignInPage() {
     }
   } = useForm({ mode: 'onChange' });
 
-  const onSubmit = (data) => {
-    instance.post('auth/login', data).then((response) => {
-      if (response.data?.msg) {
-        setErrorMessage(response.data?.msg);
-      } else {
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('user_profile', JSON.stringify(response.data.user));
-        navigate('/dashboard');
-      }
-    })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+  const onSubmit = async (data) => {
+    const response = await instance.post('auth/login', data);
+    if (response.data?.msg) {
+      setErrorMessage(response.data?.msg);
+    } else {
+      localStorage.setItem('access_token', response.data.access_token);
+      localStorage.setItem('user_profile', JSON.stringify(response.data.user));
+      navigate('/dashboard');
+    }
   };
   return (
 
@@ -41,6 +37,9 @@ export default function SignInPage() {
         className="surface-card p-4 shadow-2 border-round w-full lg:w-6"
         style={{ maxWidth: '400px' }}
       >
+        <Link to="/">
+          <i className="pi pi-home" style={{ fontSize: '2rem' }} />
+        </Link>
         <h1 className="text-center text-primary">Sign In</h1>
         <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="p-fluid justify-content-center">
           <TextInput

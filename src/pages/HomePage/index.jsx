@@ -1,5 +1,10 @@
+import Header from 'layout/header';
+
 export default function HomePage() {
   return (
-    <div className="text-center py-2">This is home page</div>
+    <div className="background" style={{ display: 'flex', flexDirection: 'column' }}>
+      <Header />
+      <div className="flex align-items-center justify-content-center" style={{ flex: 1 }} />
+    </div>
   );
 }
