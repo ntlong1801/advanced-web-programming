@@ -11,10 +11,9 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 
-
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   // [POST] localhost:3000/auth/login
   // Header: Content-Type: application/json
@@ -30,7 +29,12 @@ export class AuthController {
   // Body: { username : "username", password: "password" }
   @Post('signup')
   async login(@Request() req) {
-    return this.authService.signup(req.body.username, req.body.password);
+    return this.authService.signup(
+      req.body.username,
+      req.body.password,
+      req.body.fullName,
+      req.body.email,
+    );
   }
 
   // [POST] localhost:3000/auth/logout
@@ -39,7 +43,7 @@ export class AuthController {
   @Post('logout')
   async logout(@Request() req) {
     // Implement logout logic (optional, depending on your requirements)
-    return { msg: "logout successfully!" };
+    return { msg: 'logout successfully!' };
   }
 
   // [POST] localhost:3000/auth/profile

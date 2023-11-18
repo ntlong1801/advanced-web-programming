@@ -1,10 +1,10 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
 
   // on fixing ...
   @Get(':username')
@@ -14,5 +14,15 @@ export class UserController {
       return { message: 'User not found' };
     }
     return user;
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('changeProfile')
+  async changeProfile(@Body() changeProfileDTO: Record<string, any>) {
+    return await this.userService.updateUser(
+      changeProfileDTO.username,
+      changeProfileDTO.fullName,
+      changeProfileDTO.email,
+    );
   }
 }
