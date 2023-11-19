@@ -65,6 +65,14 @@ export default function UserPage() {
               defaultValue={user?.email}
               errorMessage={errors?.email?.message || ''}
             />
+            <TextInput
+              type="password"
+              name="password"
+              control={control}
+              errors={errors}
+              label="New Password"
+              defaultValue=""
+            />
             <div className="text-center mt-4">
               <Button
                 label="Change"

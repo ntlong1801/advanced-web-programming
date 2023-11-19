@@ -23,6 +23,7 @@ export class UserController {
       changeProfileDTO.username,
       changeProfileDTO.fullName,
       changeProfileDTO.email,
+      changeProfileDTO.password
     );
   }
 }
