@@ -9,7 +9,7 @@ export default function DashBoardPage() {
       </Header>
       <img
         className="fullscreen-image"
-        src=".\dashBoard.png"
+        src=".\dashBoard2.png"
         alt="Dashboardimage"
       />
     </div>
