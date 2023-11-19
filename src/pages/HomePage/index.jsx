@@ -5,6 +5,11 @@ export default function HomePage() {
     <div className="background" style={{ display: 'flex', flexDirection: 'column' }}>
       <Header />
       <div className="flex align-items-center justify-content-center" style={{ flex: 1 }} />
+      <img
+        className="fullscreen-image"
+        src=".\homePage.png"
+        alt="Homepage_image"
+      />
     </div>
   );
 }
