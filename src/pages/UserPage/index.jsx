@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router';
 
-
 export default function UserPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
@@ -57,7 +56,7 @@ export default function UserPage() {
       <div className="flex align-items-center justify-content-center" style={{ flex: 1 }}>
         <div
           className="surface-card p-4 shadow-2 border-round w-full lg:w-6"
-          style={{ maxWidth: '400px', height: '50vh' }}
+          style={{ maxWidth: '400px' }}
         >
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="p-fluid justify-content-center">
             <div className="text-center">

@@ -9,7 +9,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async findByUsername(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { username: username } });
@@ -39,8 +39,6 @@ export class UserService {
     // Find the user by username
     const user = await this.findByUsername(username);
 
-    const oldPassword: string = user.password;
-
     // If the user is not found, throw a NotFoundException
     if (!user) {
       throw new NotFoundException(`User with username ${username} not found`);
@@ -68,7 +66,7 @@ export class UserService {
       throw new NotFoundException(`User with username ${username} not found`);
     }
 
-    const condition_pw = await bcrypt.compare(oldpassword, oldPasswordDB)
+    const condition_pw = await bcrypt.compare(oldpassword, oldPasswordDB);
 
     //Check user change password
     if (condition_pw) {
@@ -76,11 +74,10 @@ export class UserService {
 
       // Save the updated user to the database
       return this.userRepository.save(user);
-
     } else {
       return {
-        msg: "Old password is incorect."
-      }
+        msg: 'Old password is incorect.',
+      };
     }
   }
 }
