@@ -7,7 +7,7 @@ export default function HomePage() {
       <div className="flex align-items-center justify-content-center" style={{ flex: 1 }} />
       <img
         className="fullscreen-image"
-        src=".\homePage.png"
+        src=".\homePage2.png"
         alt="Homepage_image"
       />
     </div>
