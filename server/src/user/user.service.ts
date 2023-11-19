@@ -35,9 +35,12 @@ export class UserService {
     username: string,
     fullname: string,
     email: string,
+    password: string|null,
   ): Promise<User> {
     // Find the user by username
     const user = await this.findByUsername(username);
+
+    const oldPassword: string = user.password;
 
     // If the user is not found, throw a NotFoundException
     if (!user) {
@@ -46,6 +49,13 @@ export class UserService {
     // Update the user's properties
     user.fullName = fullname;
     user.email = email;
+
+    //Check user change password
+    if(!password) {
+      user.password = oldPassword;
+    } else {
+      user.password = await bcrypt.hash(password, 10);
+    }
 
     // Save the updated user to the database
     return this.userRepository.save(user);
