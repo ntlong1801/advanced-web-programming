@@ -6,9 +6,9 @@ import { useState, useRef } from 'react';
 import { checkChangeProfile } from 'pages/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import instance from 'config';
-import { Toast } from 'primereact/toast';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { Toast } from 'primereact/toast';
+
 
 export default function UserPage() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
