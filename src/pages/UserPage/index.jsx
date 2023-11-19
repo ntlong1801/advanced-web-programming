@@ -27,13 +27,19 @@ export default function UserPage() {
   };
 
   const onSubmit = async (data) => {
-    const response = await instance.post('users/changeProfile', {
-      username: user?.username,
-      ...data
-    });
-    localStorage.setItem('user_profile', JSON.stringify(response.data));
-    setUser(response.data);
-    showSuccess('Change Profile Success');
+    try {
+      const response = await instance.post('users/changeProfile', {
+        username: user?.username,
+        ...data
+      });
+      localStorage.setItem('user_profile', JSON.stringify(response.data));
+      setUser(response.data);
+      showSuccess('Change Profile Success');
+    } catch (error) {
+      if (error.response?.data?.message === 'Unauthorized') {
+        navigate('/signin');
+      }
+    }
   };
 
   useEffect(() => {
