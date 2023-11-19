@@ -5,6 +5,7 @@ import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import DashBoardPage from 'pages/DashBoardPage';
 import UserPage from 'pages/UserPage';
+import ChangePassword from 'pages/ChangePassword';
 import C404 from 'pages/404Page';
 
 export default createBrowserRouter([
@@ -27,6 +28,10 @@ export default createBrowserRouter([
   {
     path: '/me',
     element: <UserPage />
+  },
+  {
+    path: '/changepassword',
+    element: <ChangePassword />
   },
   {
     path: '*',

@@ -23,7 +23,16 @@ export class UserController {
       changeProfileDTO.username,
       changeProfileDTO.fullName,
       changeProfileDTO.email,
-      changeProfileDTO.password
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('changePassword')
+  async changePassword(@Body() changePasswordDTO: Record<string, any>) {
+    return await this.userService.changePassword(
+      changePasswordDTO.username,
+      changePasswordDTO.oldpassword,
+      changePasswordDTO.newpassword,
     );
   }
 }

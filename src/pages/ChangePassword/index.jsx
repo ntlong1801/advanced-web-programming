@@ -7,7 +7,6 @@ import { checkChangeProfile } from 'pages/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import instance from 'config';
 import { Toast } from 'primereact/toast';
-import { Link } from 'react-router-dom';
 
 export default function UserPage() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
@@ -25,14 +24,23 @@ export default function UserPage() {
     toast.current.show({ severity: 'success', summary: 'Success', detail: msg, life: 3000 });
   };
 
+  const showError = (msg) => {
+    toast.current.show({ severity: 'error', summary: 'Fail', detail: msg, life: 3000 });
+  };
   const onSubmit = async (data) => {
-    const response = await instance.post('users/changeProfile', {
+    const response = await instance.post('users/changePassword', {
       username: user?.username,
       ...data
     });
+
+    if (response.data?.msg) {
+      showError(response.data?.msg);
+    } else {
+      showSuccess('Change password successful');
+    }
+
     localStorage.setItem('user_profile', JSON.stringify(response.data));
     setUser(response.data);
-    showSuccess('Change Profile Success');
   };
 
   return (
@@ -49,26 +57,32 @@ export default function UserPage() {
               <h3>{user?.username}</h3>
             </div>
             <TextInput
-              type="text"
-              name="fullName"
+              type="password"
+              name="oldpassword"
               autoFocus
               control={control}
               errors={errors}
-              label="Full name"
-              defaultValue={user?.fullName}
+              label="Old password"
+              defaultValue=""
             />
             <TextInput
-              type="text"
-              name="email"
+              type="password"
+              name="newpassword"
+              autoFocus
               control={control}
               errors={errors}
-              label="Email"
-              defaultValue={user?.email}
-              errorMessage={errors?.email?.message || ''}
+              label="New password"
+              defaultValue=""
             />
-            <Link to="/changepassword">
-              Change password
-            </Link>
+            <TextInput
+              type="password"
+              name="renewpassword"
+              autoFocus
+              control={control}
+              errors={errors}
+              label="Re-New password"
+              defaultValue=""
+            />
             <div className="text-center mt-4">
               <Button
                 label="Change"

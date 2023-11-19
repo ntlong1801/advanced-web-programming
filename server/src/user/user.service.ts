@@ -9,7 +9,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async findByUsername(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { username: username } });
@@ -35,7 +35,6 @@ export class UserService {
     username: string,
     fullname: string,
     email: string,
-    password: string|null,
   ): Promise<User> {
     // Find the user by username
     const user = await this.findByUsername(username);
@@ -50,14 +49,38 @@ export class UserService {
     user.fullName = fullname;
     user.email = email;
 
-    //Check user change password
-    if(!password) {
-      user.password = oldPassword;
-    } else {
-      user.password = await bcrypt.hash(password, 10);
-    }
-
     // Save the updated user to the database
     return this.userRepository.save(user);
+  }
+
+  async changePassword(
+    username: string,
+    oldpassword: string,
+    newpassword: string,
+  ) {
+    // Find the user by username
+    const user = await this.findByUsername(username);
+
+    const oldPasswordDB: string = user.password;
+
+    // If the user is not found, throw a NotFoundException
+    if (!user) {
+      throw new NotFoundException(`User with username ${username} not found`);
+    }
+
+    const condition_pw = await bcrypt.compare(oldpassword, oldPasswordDB)
+
+    //Check user change password
+    if (condition_pw) {
+      user.password = await bcrypt.hash(newpassword, 10);
+
+      // Save the updated user to the database
+      return this.userRepository.save(user);
+
+    } else {
+      return {
+        msg: "Old password is incorect."
+      }
+    }
   }
 }
