@@ -1,0 +1,1 @@
+{"version":3,"file":"orn.config.js","sourceRoot":"","sources":["../src/orn.config.ts"],"names":[],"mappings":";;;AACA,oDAA0C;AAC7B,QAAA,MAAM,GAAyB;IAC1C,IAAI,EAAE,UAAU;IAChB,IAAI,EAAE,IAAI;IACV,IAAI,EAAE,WAAW;IACjB,QAAQ,EAAE,UAAU;IACpB,QAAQ,EAAE,KAAK;IACf,QAAQ,EAAE,QAAQ;IAClB,WAAW,EAAE,IAAI;IACjB,QAAQ,EAAE,CAAC,kBAAI,CAAC;CACjB,CAAC"}
