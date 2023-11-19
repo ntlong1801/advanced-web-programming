@@ -2,13 +2,15 @@ import TextInput from 'components/FormControl/TextInput';
 import { useForm } from 'react-hook-form';
 import Header from 'layout/header';
 import { Button } from 'primereact/button';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { checkChangeProfile } from 'pages/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import instance from 'config';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router';
 
 export default function UserPage() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
   const toast = useRef(null);
 
@@ -33,6 +35,12 @@ export default function UserPage() {
     setUser(response.data);
     showSuccess('Change Profile Success');
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin');
+    }
+  }, []);
 
   return (
     <div className="background" style={{ display: 'flex', flexDirection: 'column' }}>
