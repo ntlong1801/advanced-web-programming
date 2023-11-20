@@ -9,9 +9,11 @@ import instance from 'config';
 import checkSignUp from 'pages/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import Loading from 'components/Loading';
 
 export default function SignUpPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useRef(null);
 
   const {
@@ -32,7 +34,9 @@ export default function SignUpPage() {
   };
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     const response = await instance.post('/auth/signup', data);
+    setIsLoading(false);
     if (response.data?.msg) {
       showError(response.data?.msg);
     } else {
@@ -94,6 +98,7 @@ export default function SignUpPage() {
         <div className="mt-2">
           Already have an account? <Link to="/signin"> Sign in here</Link>
         </div>
+        {isLoading && <Loading />}
       </div>
     </div>
   );

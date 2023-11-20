@@ -8,11 +8,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import instance from 'config';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router';
+import Loading from 'components/Loading';
 
 export default function UserPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
   const [errorSamePassword, setErrorSamePassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const toast = useRef(null);
 
   const {
@@ -35,6 +37,7 @@ export default function UserPage() {
     if (data?.newpassword !== data?.renewpassword) {
       setErrorSamePassword(true);
     } else {
+      setIsLoading(true);
       setErrorSamePassword(false);
       try {
         const response = await instance.post('users/changePassword', {
@@ -53,11 +56,13 @@ export default function UserPage() {
           navigate('/signin');
         }
       }
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user_profile')));
+    setIsLoading(false);
     if (!user) {
       navigate('/signin');
     }
@@ -110,6 +115,7 @@ export default function UserPage() {
               />
             </div>
           </form>
+          {isLoading && <Loading />}
         </div>
       </div>
 

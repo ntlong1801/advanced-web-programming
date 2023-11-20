@@ -9,10 +9,12 @@ import instance from 'config';
 import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router';
+import Loading from 'components/Loading';
 
 export default function UserPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user_profile')));
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useRef(null);
 
   const {
@@ -28,6 +30,7 @@ export default function UserPage() {
   };
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
       const response = await instance.post('users/changeProfile', {
         username: user?.username,
@@ -41,6 +44,7 @@ export default function UserPage() {
         navigate('/signin');
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -91,6 +95,7 @@ export default function UserPage() {
               />
             </div>
           </form>
+          {isLoading && <Loading />}
         </div>
       </div>
 

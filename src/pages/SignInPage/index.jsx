@@ -7,10 +7,12 @@ import { Button } from 'primereact/button';
 import { Link, useNavigate } from 'react-router-dom';
 import instance from 'config';
 import { useState } from 'react';
+import Loading from 'components/Loading';
 
 export default function SignInPage() {
   // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const {
     handleSubmit,
@@ -21,7 +23,9 @@ export default function SignInPage() {
   } = useForm({ mode: 'onChange' });
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     const response = await instance.post('auth/login', data);
+    setIsLoading(false);
     if (response.data?.msg) {
       setErrorMessage(response.data?.msg);
     } else {
@@ -68,6 +72,7 @@ export default function SignInPage() {
         <div className="mt-2">
           Don&apos;t have an account yet? <Link to="/signup"> Sign up now</Link>
         </div>
+        {isLoading && <Loading />}
       </div>
     </div>
 
