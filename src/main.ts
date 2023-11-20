@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 declare const module: any;
 
 async function bootstrap() {
@@ -14,7 +16,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.enableCors();
-  await app.listen(3000);
+
+  await app.listen(process.env.PORT || 5000);
 
   if (module.hot) {
     module.hot.accept();
